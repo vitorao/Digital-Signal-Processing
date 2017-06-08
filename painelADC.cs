@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.IO.Ports; // necessário para ter acesso as portas
+using System.IO.Ports;
 
 
 using System.Windows.Forms.DataVisualization.Charting;
@@ -15,13 +15,13 @@ using System.Windows.Forms.DataVisualization.Charting;
 
 namespace interfaceADC
 {
-    public partial class Form1 : Form
+    public partial class painelADC : Form
     {
         int k = 10;
         string RxString;
         int tempo = 0;
      
-        public Form1()
+        public painelADC()
         {
             InitializeComponent();
             timerCOM.Enabled = true;
@@ -34,13 +34,10 @@ namespace interfaceADC
 
         private void atualizaListaCOMs()
         {
-            int i;
-            bool quantDiferente;    //flag para sinalizar que a quantidade de portas mudou
-
-            i = 0;
+            int i = 0;
+            bool quantDiferente;
             quantDiferente = false;
 
-            //se a quantidade de portas mudou
             if (comboBox1.Items.Count == SerialPort.GetPortNames().Length)
             {
                 foreach (string s in SerialPort.GetPortNames())
@@ -56,21 +53,17 @@ namespace interfaceADC
                 quantDiferente = true;
             }
 
-            //Se não foi detectado diferença
             if (quantDiferente == false)
             {
-                return;                     //retorna
+                return;
             }
 
-            //limpa comboBox
             comboBox1.Items.Clear();
 
-            //adiciona todas as COM diponíveis na lista
             foreach (string s in SerialPort.GetPortNames())
             {
                 comboBox1.Items.Add(s);
             }
-            //seleciona a primeira posição da lista
             comboBox1.SelectedIndex = 0;
         }
 
@@ -122,14 +115,14 @@ namespace interfaceADC
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
-            if (serialPort1.IsOpen == true)  // se porta aberta
-                serialPort1.Close();         //fecha a porta
+            if (serialPort1.IsOpen == true)
+                serialPort1.Close();
         }
 
         private void serialPort1_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
-            RxString = serialPort1.ReadExisting();              //le o dado disponível na serial
-            this.Invoke(new EventHandler(trataDadoRecebido));   //chama outra thread para escrever o dado no text box
+            RxString = serialPort1.ReadExisting();
+            this.Invoke(new EventHandler(trataDadoRecebido));
         }
 
         private void trataDadoRecebido(object sender, EventArgs e)
@@ -179,11 +172,6 @@ namespace interfaceADC
                 chart1.Series["Tensão"].Points.RemoveAt(0);
                 chart1.Update();
             }
-        }
-
-        private void label2_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }
