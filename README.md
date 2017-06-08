@@ -5,6 +5,6 @@ About Spectral Leakage:
 
 # painelADC.cs
 
-PainelADC is a C# program used to plot points from a IC ADC0804 which convert digital signals to analog using a Arduino UNO and your serial interface.
+PainelADC is a C# program used to plot points from a IC ADC0804 which convert analog signals to digital and to communicate was used Arduino UNO with code adc0804.ino using USB serial interface.
 
 
